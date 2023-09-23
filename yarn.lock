@@ -1282,6 +1282,11 @@
   resolved "https://registry.npmjs.org/@react-native-community/eslint-plugin/-/eslint-plugin-1.3.0.tgz"
   integrity sha512-+zDZ20NUnSWghj7Ku5aFphMzuM9JulqCW+aPXT6IfIXFbb8tzYTTOSeRFOtuekJ99ibW2fUCSsjuKNlwDIbHFg==
 
+"@react-native-ml-kit/text-recognition@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-ml-kit/text-recognition/-/text-recognition-1.3.0.tgz#2a69ba065cf9caf535b2d84336a10ccce62b03c4"
+  integrity sha512-Sufcq/RpGohEHABSZ9N/zc+Ok8DdqSa0jglbTRIl5KDLXoVNPjf8rq6TWQEULWZesrdpk3kARDXBCzkugaUKWg==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"

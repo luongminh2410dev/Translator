@@ -1,9 +1,17 @@
-import React, {useRef, useState} from 'react';
-import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {LANG_TAGS, MLKitTranslator} from 'react-native-mlkit-translate-text';
 
 const App = () => {
   const [text, setText] = useState('');
+  const [isLoading, setLoading] = useState(true);
   const timeout = useRef<any>(null);
 
   const onChangeText = (value: string) => {
@@ -26,7 +34,33 @@ const App = () => {
     }, 500);
   };
 
-  return (
+  useEffect(() => {
+    Promise.all([
+      MLKitTranslator.downloadModel(LANG_TAGS.ENGLISH),
+      MLKitTranslator.downloadModel(LANG_TAGS.VIETNAMESE),
+    ])
+      .then(res => {
+        console.log('SUCCESS', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  return isLoading ? (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <ActivityIndicator size="large" color={'green'} />
+    </View>
+  ) : (
     <View style={styles.container}>
       <Text style={styles.heading}>Enter text to translate</Text>
       <TextInput
