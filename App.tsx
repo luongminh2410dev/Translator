@@ -1,9 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Alert, Button} from 'react-native';
-import TranslateText, {
-  TranslateLanguage,
-} from '@react-native-ml-kit/translate-text';
-import IdentifyLanguages from '@react-native-ml-kit/identify-languages';
+import React, {useRef, useState} from 'react';
+import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
+import {LANG_TAGS, MLKitTranslator} from 'react-native-mlkit-translate-text';
 
 const App = () => {
   const [text, setText] = useState('');
@@ -12,12 +9,11 @@ const App = () => {
   const onChangeText = (value: string) => {
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      TranslateText.translate({
-        text: value,
-        sourceLanguage: TranslateLanguage.ENGLISH,
-        targetLanguage: TranslateLanguage.VIETNAMESE,
-        downloadModelIfNeeded: true,
-      })
+      MLKitTranslator.translateText(
+        value,
+        LANG_TAGS.ENGLISH,
+        LANG_TAGS.VIETNAMESE,
+      )
         .then(result => {
           setText(result as string);
         })
@@ -29,11 +25,6 @@ const App = () => {
         });
     }, 500);
   };
-  useEffect(() => {
-    IdentifyLanguages.identify('Xin chào').then(res => {
-      // console.log(res);
-    });
-  }, []);
 
   return (
     <View style={styles.container}>

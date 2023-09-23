@@ -1,0 +1,133 @@
+diff --git a/node_modules/react-native-mlkit-translate-text/src/MLKitTranslator.ts b/node_modules/react-native-mlkit-translate-text/src/MLKitTranslator.ts
+index c2800c4..87d840d 100644
+--- a/node_modules/react-native-mlkit-translate-text/src/MLKitTranslator.ts
++++ b/node_modules/react-native-mlkit-translate-text/src/MLKitTranslator.ts
+@@ -63,65 +63,7 @@ export const LANG_TAGS = {
+     VIETNAMESE: "vi",
+     WELSH: "cy",
+ }
+-export type LANG_TAGS_TYPE = 'AFRIKAANS' |
+-    'ALBANIAN' |
+-    'ARABIC' |
+-    'BELARUSIAN' |
+-    'BULGARIAN' |
+-    'BENGALI' |
+-    'CATALAN' |
+-    'CHINESE' |
+-    'CROATIAN' |
+-    'CZECH' |
+-    'DANISH' |
+-    'DUTCH' |
+-    'ENGLISH' |
+-    'ESPERANTO' |
+-    'ESTONIAN' |
+-    'FINNISH' |
+-    'FRENCH' |
+-    'GALICIAN' |
+-    'GEORGIAN' |
+-    'GERMAN' |
+-    'GREEK' |
+-    'GUJARATI' |
+-    'HAITIAN_CREOLE' |
+-    'HEBREW' |
+-    'HINDI' |
+-    'HUNGARIAN' |
+-    'ICELANDIC' |
+-    'INDONESIAN' |
+-    'IRISH' |
+-    'ITALIAN' |
+-    'JAPANESE' |
+-    'KANNADA' |
+-    'KOREAN' |
+-    'LITHUANIAN' |
+-    'LATVIAN' |
+-    'MACEDONIAN' |
+-    'MARATHI' |
+-    'MALAY' |
+-    'MALTESE' |
+-    'NORWEGIAN' |
+-    'PERSIAN' |
+-    'POLISH' |
+-    'PORTUGUESE' |
+-    'ROMANIAN' |
+-    'RUSSIAN' |
+-    'SLOVAK' |
+-    'SLOVENIAN' |
+-    'SPANISH' |
+-    'SWEDISH' |
+-    'SWAHILI' |
+-    'TAGALOG' |
+-    'TAMIL' |
+-    'TELUGU' |
+-    'THAI' |
+-    'TURKISH' |
+-    'UKRAINIAN' |
+-    'URDU' |
+-    'VIETNAMESE' |
+-    'WELSH';
++export type LANG_TAGS_TYPE = typeof LANG_TAGS[keyof typeof LANG_TAGS];
+ 
+ const identifyLanguage = (text: string) => {
+     return new Promise((resolver, rejecter) => {
+@@ -141,26 +83,26 @@ const identifyPossibleLanguages = (text: string) => {
+ }
+ const translateText = (text: string, sourceLanguage: LANG_TAGS_TYPE, targetLanguage: LANG_TAGS_TYPE) => {
+     return new Promise((resolver, rejecter) => {
+-        if (LANG_TAGS[sourceLanguage] === undefined || LANG_TAGS[targetLanguage] === undefined) {
++        if (sourceLanguage === undefined || targetLanguage === undefined) {
+             rejecter('unsupport language');
+             return;
+         }
+         NativeMLKitTranslateText.translateText(
+             text,
+-            LANG_TAGS[sourceLanguage],
+-            LANG_TAGS[targetLanguage],
++            sourceLanguage,
++            targetLanguage,
+             (v) => { resolver(v); },
+             (e) => { rejecter(e); });
+     });
+ }
+ const isModelDownloaded = (language: LANG_TAGS_TYPE) => {
+     return new Promise((resolver, rejecter) => {
+-        if (LANG_TAGS[language] === undefined) {
++        if (language === undefined) {
+             rejecter('unsupport language');
+             return;
+         }
+         NativeMLKitTranslateText.isModelDownloaded(
+-            LANG_TAGS[language],
++            language,
+             (v) => {
+                 if (Platform.OS === 'ios') {
+                     resolver(v === 1 ? true : false);
+@@ -174,12 +116,12 @@ const isModelDownloaded = (language: LANG_TAGS_TYPE) => {
+ }
+ const deleteDownloadedModel = (language: LANG_TAGS_TYPE) => {
+     return new Promise((resolver, rejecter) => {
+-        if (LANG_TAGS[language] === undefined) {
++        if (language === undefined) {
+             rejecter('unsupport language');
+             return;
+         }
+         NativeMLKitTranslateText.deleteDownloadedModel(
+-            LANG_TAGS[language],
++            language,
+             (v) => { resolver(v); },
+             (e) => { rejecter(e); }
+         );
+@@ -187,12 +129,12 @@ const deleteDownloadedModel = (language: LANG_TAGS_TYPE) => {
+ }
+ const downloadModel = (language: LANG_TAGS_TYPE) => {
+     return new Promise((resolver, rejecter) => {
+-        if (LANG_TAGS[language] === undefined) {
++        if (language === undefined) {
+             rejecter('unsupport language');
+             return;
+         }
+         NativeMLKitTranslateText.downloadModel(
+-            LANG_TAGS[language],
++            language,
+             (v) => { resolver(v); },
+             (e) => { rejecter(e); }
+         );
