@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 import {LANG_TAGS, MLKitTranslator} from 'react-native-mlkit-translate-text';
+import TranslateImage from './src/TranslateImage';
+import VoiceTranslate from './src/VoiceTranslate';
 
 const App = () => {
   const [text, setText] = useState('');
@@ -71,7 +73,8 @@ const App = () => {
         onChangeText={onChangeText}
       />
       <Text style={styles.translate_text}>{text}</Text>
-      {/* <Button title="Translate into Spanish" onPress={handlePress} /> */}
+      <VoiceTranslate />
+      <TranslateImage />
     </View>
   );
 };
