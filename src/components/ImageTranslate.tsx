@@ -38,7 +38,8 @@ const TranslateImage = () => {
         newState.push({
           value: text,
           position: {
-            top: `${((frame?.top + frame?.width / 2 || 0) * 100) / height}%`,
+            // @ts-ignore
+            top: `${((frame?.top + frame?.width / 2) * 100) / height}%`,
             left: `${((frame?.left || 0) * 100) / width}%`,
           },
         });
@@ -47,16 +48,6 @@ const TranslateImage = () => {
       setTranslateText(newState);
     });
   };
-  // for (let block of result.blocks) {
-
-  //     console.log('Block text:', block.text);
-  //     console.log('Block frame:', block.frame);
-
-  //     for (let line of block.lines) {
-  //       console.log('Line text:', line.text);
-  //       console.log('Line frame:', line.frame);
-  //     }
-  //   }
 
   return (
     <View
