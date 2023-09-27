@@ -1,11 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  DimensionValue,
-} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import TextRecognition from '@react-native-ml-kit/text-recognition';
 import {MLKitTranslator, LANG_TAGS} from 'react-native-mlkit-translate-text';
@@ -13,8 +6,8 @@ import {MLKitTranslator, LANG_TAGS} from 'react-native-mlkit-translate-text';
 interface ITranslateText {
   value: string;
   position: {
-    top?: DimensionValue;
-    left?: DimensionValue;
+    top?: string;
+    left?: string;
   };
 }
 
