@@ -1,4 +1,3 @@
-import {Metrics} from '@app/utils';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -9,7 +8,7 @@ const styles = StyleSheet.create({
   },
   back_button: {
     position: 'absolute',
-    top: Metrics.STATUS_BAR_HEIGHT + 20,
+    top: 12,
     left: 12,
     zIndex: 1,
   },
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
   },
   translate_item: {
     position: 'absolute',
-    backgroundColor: 'red',
+    backgroundColor: '#FFF',
     zIndex: 1,
   },
 });
