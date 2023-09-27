@@ -21,6 +21,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import styles from './styles';
 import TextTranslate from '@app/components/TextTranslate';
+import {useNavigation} from '@react-navigation/native';
+import Router from '@app/navigators/Router';
 
 const getLanguageLabel = (lang: LANG_TAGS_TYPE) => {
   return Object.keys(LANG_TAGS).find((key: any) => {
@@ -29,6 +31,7 @@ const getLanguageLabel = (lang: LANG_TAGS_TYPE) => {
 };
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const [isLoading, setLoading] = useState(true);
   const [sourceLanguage, setSourceLanguage] = useState<LANG_TAGS_TYPE>(
     LANG_TAGS.ENGLISH,
@@ -104,7 +107,11 @@ const HomeScreen = () => {
                   backgroundColor: '#a8c7fa',
                 }}></TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.conversation_button}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(Router.IMAGE_TRANSLATOR);
+              }}
+              style={styles.conversation_button}>
               <Feather name="camera" size={20} color="#FFF" />
             </TouchableOpacity>
           </View>

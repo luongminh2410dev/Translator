@@ -1,6 +1,7 @@
 // In App.js in a new project
 
 import HomeScreen from '@app/screens/Home';
+import ImageTranslator from '@app/screens/ImageTranslator';
 import SelectLanguage from '@app/screens/SelectLanguage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -21,6 +22,10 @@ function App() {
         <Stack.Screen
           name={Router.SELECT_LANGUAGE}
           component={SelectLanguage}
+        />
+        <Stack.Screen
+          name={Router.IMAGE_TRANSLATOR}
+          component={ImageTranslator}
         />
       </Stack.Navigator>
     </NavigationContainer>
