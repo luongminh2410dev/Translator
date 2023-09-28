@@ -1,11 +1,6 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import Voice from '@react-native-voice/voice';
 import React, {useEffect} from 'react';
-import Voice, {
-  SpeechEndEvent,
-  SpeechErrorEvent,
-  SpeechRecognizedEvent,
-  SpeechResultsEvent,
-} from '@react-native-voice/voice';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {LANG_TAGS} from 'react-native-mlkit-translate-text';
 
 const VoiceTranslate = () => {
