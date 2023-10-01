@@ -23,6 +23,7 @@ import styles from './styles';
 import TextTranslate from '@app/components/TextTranslate';
 import {useNavigation} from '@react-navigation/native';
 import Router from '@app/navigators/Router';
+import Voice from '@react-native-voice/voice';
 
 const getLanguageLabel = (lang: LANG_TAGS_TYPE) => {
   return Object.keys(LANG_TAGS).find((key: any) => {
@@ -39,6 +40,7 @@ const HomeScreen = () => {
   const [targetLanguage, setTargetLanguage] = useState<LANG_TAGS_TYPE>(
     LANG_TAGS.VIETNAMESE,
   );
+  const refTextTranslate = useRef(null);
 
   useEffect(() => {
     Promise.all([
@@ -47,11 +49,40 @@ const HomeScreen = () => {
     ]).finally(() => {
       setLoading(false);
     });
+
+    Voice.isAvailable().then(res => {
+      console.log('isAvailable', res);
+    });
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
   }, []);
 
   const handleSwapLanguage = () => {
     setTargetLanguage(sourceLanguage);
     setSourceLanguage(targetLanguage);
+  };
+
+  Voice.onSpeechPartialResults = e => {
+    refTextTranslate.current.setValue(e.value[0]);
+    console.log('onSpeechPartialResults: ', e.value);
+  };
+
+  Voice.onSpeechRecognized = e => {
+    console.log('onSpeechRecognized: ', e.isFinal);
+  };
+
+  Voice.onSpeechError = e => {
+    console.log('onSpeechError: ', e.error?.message);
+  };
+
+  Voice.onSpeechResults = e => {
+    refTextTranslate.current.setValue(e.value[0]);
+    console.log('onSpeechResults: ', e.value);
+  };
+
+  Voice.onSpeechEnd = e => {
+    console.log('onSpeechEnd: ', e.error);
   };
 
   return isLoading ? (
@@ -71,6 +102,7 @@ const HomeScreen = () => {
         style={styles.container}>
         <View style={styles.body}>
           <TextTranslate
+            ref={refTextTranslate}
             sourceLang={sourceLanguage}
             targetLang={targetLanguage}
           />
@@ -100,12 +132,22 @@ const HomeScreen = () => {
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <TouchableOpacity
+                onPressIn={() => {
+                  Voice.start(sourceLanguage);
+                }}
+                onPressOut={() => {
+                  Voice.stop();
+                }}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 90,
+                  height: 90,
                   borderRadius: 100,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   backgroundColor: '#a8c7fa',
-                }}></TouchableOpacity>
+                }}>
+                <Feather name="mic" size={22} color="#284a89" />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               onPress={() => {

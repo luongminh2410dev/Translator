@@ -1,8 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {
   LANG_TAGS_TYPE,
   MLKitTranslator,
+  translateText,
 } from 'react-native-mlkit-translate-text';
 import {Input} from '.';
 
@@ -10,13 +17,20 @@ interface TextTranslateProps {
   sourceLang: LANG_TAGS_TYPE;
   targetLang: LANG_TAGS_TYPE;
 }
-const TextTranslate = (props: TextTranslateProps) => {
+const TextTranslate = forwardRef((props: TextTranslateProps, ref) => {
   const {sourceLang, targetLang} = props;
   const [sourceText, setSourceText] = useState('');
   const [targetText, setTargetText] = useState('');
   const refSourceText = useRef('');
   const refTempLangs = useRef<TextTranslateProps>({sourceLang, targetLang});
   const timeout = useRef<any>(null);
+
+  useImperativeHandle(ref, () => ({
+    setValue: (value: string) => {
+      setSourceText(value);
+      translate(value);
+    },
+  }));
 
   useEffect(() => {
     if (
@@ -71,7 +85,7 @@ const TextTranslate = (props: TextTranslateProps) => {
       <Text style={styles.input}>{targetText}</Text>
     </>
   );
-};
+});
 
 export default TextTranslate;
 
